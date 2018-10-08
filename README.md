@@ -1,4 +1,4 @@
-# Digit Clutter
+# Stereo Digit Clutter
 
 Contains python scripts for generating digit clutter and digit debris stimuli as described [here](https://doi.org/10.1101/133330)
 
