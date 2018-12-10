@@ -64,7 +64,7 @@ def sample_clutter(**kwargs):
 
     image_size = kwargs.get('image_size', (512, 512))
     n_letters = kwargs.get('n_letters', 1)
-    font_set = kwargs.get('font_set', ['helvetica-bold'])
+    font_set = kwargs.get('font_set', ['ArialB'])
     character_set = kwargs.get('character_set', DIGITS)
     face_colour_set = kwargs.get('face_colour_set', [(0, 0, 0, 1.0)])
     edge_colour_set = kwargs.get('edge_colour_set', [(255, 255, 255, 1.0)])
@@ -78,6 +78,7 @@ def sample_clutter(**kwargs):
     size_mean = kwargs.get('size_mean', (1, 1))
     size_cov = kwargs.get('size_cov', ((0, 0), (0, 0)))
     fontsize = kwargs.get('fontsize', 384)
+    scaling = kwargs.get('scaling_array', None)
 
     # Sample characters without replacement
     characters = np.random.choice(character_set, n_letters,
@@ -124,14 +125,17 @@ def sample_clutter(**kwargs):
         else:
             raise ValueError('{0} is not a valid size sampling type'\
             .format(size_sample_type))
-
+        
+        # modified size for three dimensional size
+        if scaling:
+          char_opt['size_scale'] = scaling[i]
         clutter_sample[i] = Character(char_opt)
 
     return Clutter(clutter_sample)
 
 def make_debris_templates(**kwargs):
     '''
-    Makes debris templates inclduing all possible character font combinations
+    Makes debris templates including all possible character font combinations
 
     kwargs:
         character_set: a sequence of characters to generate templates from
@@ -281,10 +285,10 @@ def make_debris(n_images, wdir='./temp_workspace', **kwargs):
 
     # Get the kwargs
     character_set = kwargs.get('character_set', DIGITS)
-    font_set = kwargs.get('font_set', ['helvetica-bold'])
+    font_set = kwargs.get('font_set', ['ArialB'])
     image_size = kwargs.get('image_size', (512, 512))
-    image_save_size = kwargs.get('image_save_size', (32, 32))
-    debris_size = kwargs.get('debris_size', [6, 9])
+    image_save_size = kwargs.get('image_save_size', (32, 32)) # change back to 32/32
+    debris_size = kwargs.get('debris_size', [6, 9]) # change back to 6/9 
     n_debris = kwargs.get('n_debris', [50, 51])
     fontsize = kwargs.get('fontsize', 384)
     size_mean = kwargs.get('size_mean', [1.0, 1.0])
@@ -397,6 +401,6 @@ def add_debris(clutter, debris):
 def get_character_masks():
     raise NotImplementedError
 
-def calculate_occlussion():
+def calculate_occlusion():
     raise NotImplementedError
 

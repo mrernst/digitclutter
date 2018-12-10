@@ -62,7 +62,7 @@ def save_image_set(clutter_list, csv_fname, overwrite=True):
     elif os.path.exists(csv_fname):
         print('Overwriting ' + csv_fname)
         os.remove(csv_fname)
-    with open(csv_fname, 'w', newline='') as csvfile:
+    with open(csv_fname, 'w') as csvfile:
         # Open the csv file
         fwriter = csv.writer(csvfile, delimiter=',', quotechar='|')
         for clutter in clutter_list:
@@ -191,7 +191,7 @@ def save_images_as_mat(mat_fname, clutter_list, image_save_size, fname_list=None
 
     # Generate image array
     print('Generating image arrays')
-    images = np.zeros((n_images, image_save_size[0], image_save_size[1], 3), dtype=np.uint8)
+    images = np.zeros((n_images, image_save_size[1], image_save_size[0], 3), dtype=np.uint8)
     for i in range(n_images):
         images[i] = np.array(Image.open(resize_fname_list[i]+'.bmp'), dtype=np.uint8)
         
